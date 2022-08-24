@@ -22,7 +22,7 @@ class PackageController extends Controller
             $package_detail = $request['data'];
 
             if (count($package_detail) <= 1000) {
-                foreach (array_chunk($package_detail, 100) as $data) {
+                foreach (array_chunk($package_detail, 50) as $data) {
                     foreach ($data as $package) {
                         PackageProcessJob::dispatch($user, $package);
                     }
