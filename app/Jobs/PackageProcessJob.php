@@ -37,21 +37,17 @@ class PackageProcessJob implements ShouldQueue
     public function handle()
     {
         DB::beginTransaction();
-
         try {
-
             if (Package::where('tracking_code', $this->package['tracking_code'])
                 ->where('user_id', $this->user->id)
                 ->doesntExist()) {
                  $package =  $this->user->packages()->create($this->package);
                  SendUserMailJob::dispatch($package)->delay(now()->addSeconds(3));
             }
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             info($e->getMessage());
         }
-
     }
 }

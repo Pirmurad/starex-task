@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PackageRequest;
 use App\Jobs\PackageProcessJob;
-use App\Models\Package;
 use Illuminate\Http\JsonResponse;
 
 class PackageController extends Controller
@@ -18,7 +17,6 @@ class PackageController extends Controller
 
     public function store(PackageRequest $request)
     {
-
         try {
             $user = request()->user();
 
@@ -29,7 +27,6 @@ class PackageController extends Controller
                         PackageProcessJob::dispatch($user, $package);
                     }
                 }
-
             }
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
